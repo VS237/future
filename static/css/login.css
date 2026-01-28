@@ -1,0 +1,90 @@
+body {
+    background-color: #0f172a; /* Deep Navy Theme */
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.logo-text {
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #2dd4bf, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-fill-color: transparent;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+.form-control {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 12px;
+}
+
+.form-control:focus {
+    background: #0f172a;
+    border-color: #2dd4bf;
+    box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+    color: white;
+}
+
+.btn-future {
+    background: linear-gradient(90deg, #2dd4bf 0%, #0d9488 100%);
+    border: none;
+    font-weight: 600;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-future:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.accent-link {
+    color: #2dd4bf;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+.message-container {
+margin-bottom: 20px;
+}
+
+.message-container h4 {
+padding: 12px 20px;
+border-radius: 10px;
+font-size: 0.9rem;
+font-weight: 500;
+text-align: center;
+margin-bottom: 10px;
+border: 1px solid transparent;
+}
+
+.message-container h4[style*="color: firebrick"] {
+background-color: rgba(220, 53, 69, 0.1);
+border-color: rgba(220, 53, 69, 0.2);
+color: #dc3545 !important;
+}
+
+.message-container h4[style*="color: dodgerblue"] {
+background-color: rgba(255, 165, 0, 0.1);
+border-color: rgba(255, 165, 0, 0.3);
+color: #2691d9 !important;
+}

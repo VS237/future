@@ -1,0 +1,342 @@
+:root {
+    /* Dark Theme Variables */
+    --bg-body: #0f172a;
+    --bg-side: #1e293b;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent: #2dd4bf;
+    --accent-glow: rgba(45, 212, 191, 0.2);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+    --bg-body: #f1f5f9;
+    --bg-side: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --accent: #0d9488;
+    --accent-glow: rgba(13, 148, 136, 0.1);
+    --border: rgba(0, 0, 0, 0.05);
+}
+
+* { transition: all 0.3s ease; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Sidebar --- */
+nav {
+    width: 260px;
+    background: var(--bg-side);
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 40px;
+    letter-spacing: -1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-link {
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--accent-glow);
+    color: var(--accent);
+}
+
+/* --- Main Content --- */
+main {
+    margin-left: 260px;
+    padding: 40px;
+    width: calc(100% - 260px);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* --- Theme Switcher --- */
+.theme-toggle {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--accent);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Stats Cards --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--accent);
+}
+
+.stat-card h3 { 
+    margin: 0; font-size: 0.85rem; color: var(--text-muted); 
+    text-transform: uppercase; letter-spacing: 1px;
+}
+
+.stat-card p { 
+    font-size: 2.2rem; margin: 10px 0 0; font-weight: 700; 
+}
+
+/* --- Sections & Tables --- */
+.section-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.section-header h2 { font-size: 1.25rem; margin: 0; }
+
+table { width: 100%; border-collapse: collapse; }
+
+th { 
+    text-align: left; padding: 15px; 
+    color: var(--text-muted); font-size: 0.8rem;
+    text-transform: uppercase; border-bottom: 1px solid var(--border);
+}
+
+td { padding: 18px 15px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+
+tr:hover { background: rgba(var(--accent), 0.02); }
+
+.badge {
+    background: var(--accent-glow);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.avatar {
+    width: 35px; height: 35px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+}
+
+@media (max-width: 992px) {
+    nav { width: 80px; padding: 20px 10px; }
+    .nav-link span, .logo span { display: none; }
+    main { margin-left: 80px; width: calc(100% - 80px); }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: none; /* Hidden by default */
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: var(--bg-side);
+  width: 90%;
+  max-width: 600px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 30px;
+  animation: modalScale 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-body { color: var(--text-main); line-height: 1.6; }
+
+.detail-item {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.detail-value { font-size: 1rem; color: var(--text-main); }
+
+.close-btn {
+  background: none; border: none; color: var(--text-muted);
+  font-size: 2rem; cursor: pointer;
+}
+
+@keyframes modalScale {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Make table rows clickable */
+tbody tr { cursor: pointer; transition: background 0.2s; }
+tbody tr:hover { background: var(--accent-glow) !important; }
+
+.action-btn-delete {
+  background: none;
+  border: none;
+  color: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn-delete:hover {
+  background: none;
+  color: white;
+  border-color: #4dffea;
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+/* Ensure the table cell doesn't take too much space */
+th:last-child, td:last-child {
+  width: 80px;
+}
+
+.delete-icon {
+  color: var(--accent); /* Faded by default */
+  transition: all 0.3s ease;
+}
+
+.delete-icon:hover {
+  color: #e25675; /* Bright red on hover */
+  transform: scale(1.2) rotate(10deg); /* Modern pop-out effect */
+  cursor: pointer;
+}
+
+/* Container to allow horizontal scrolling on mobile */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  margin-bottom: 1rem;
+  border-radius: 12px;
+}
+
+/* Ensure the table doesn't shrink smaller than its content */
+table {
+  width: 100%;
+  min-width: 800px; /* Forces scrollbar instead of squishing columns */
+  border-collapse: collapse;
+}
+
+/* Responsive Tweaks for Tablet/Mobile */
+@media (max-width: 768px) {
+  /* Optional: Hide less important columns on mobile to reduce scroll */
+  .geo-tag-column { display: none; } 
+  
+  td, th {
+      padding: 12px 8px; /* Slightly tighter padding */
+      font-size: 0.8rem;  /* Smaller text for density */
+  }
+
+  /* Make the Data Stream column even narrower on mobile */
+  td:nth-child(5) {
+      max-width: 120px !important;
+  }
+}
+
+/* Custom Scrollbar for the table (Modern Look) */
+.table-responsive::-webkit-scrollbar {
+  height: 6px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+.table-responsive::-webkit-scrollbar-track {
+  background: var(--bg-side);
+}
+
+.table-responsive {
+  background: linear-gradient(to right, var(--bg-side) 30%, rgba(255,255,255,0)), 
+              linear-gradient(to right, rgba(255,255,255,0), var(--bg-side) 70%) 0 100%, 
+              radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.2), rgba(0,0,0,0)), 
+              radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+  background-repeat: no-repeat;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+}

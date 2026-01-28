@@ -1,0 +1,320 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-section {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.section-title {
+  font-size: 18px;
+  color: white;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.checkbox-group label {
+  margin: 0;
+  
+}
+.form-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background: white;
+}
+select:focus {
+  border-color: #2691d9;
+  outline: none;
+}
+
+/* Form Styles */
+form {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+/* Name Row Styles */
+.name-row {
+display: flex;
+gap: 15px;
+width: 100%;
+}
+
+.name-field {
+flex: 1;
+min-width: 0; /* Prevents flex items from overflowing */
+}
+
+/* Responsive adjustments for name row */
+@media (max-width: 768px) {
+.name-row {
+    gap: 12px;
+}
+}
+
+@media (max-width: 480px) {
+.name-row {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.name-field {
+    flex: none;
+}
+}
+
+/* Input Fields */
+.txt_field {
+position: relative;
+margin-bottom: 10px;
+}
+
+.txt_field textarea {
+width: 100%;
+padding: 15px 20px;
+border: 1px solid #334155;
+border-radius: 12px;
+background: rgba(15, 23, 42, 1);
+font-size: 1rem;
+color: #fff;
+transition: all 0.3s ease;
+outline: none;
+}
+
+.txt_field textarea:focus {
+transform: translateY(-2px);
+background: rgba(15, 23, 42, 1);
+border-color: #2dd4bf;
+color: #fff;
+box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+}
+
+.txt_field select {
+width: 100%;
+padding: 15px 20px;
+border: 1px solid #334155;
+border-radius: 12px;
+background: rgba(15, 23, 42, 1);
+font-size: 1rem;
+color: #fff;
+transition: all 0.3s ease;
+outline: none;
+}
+
+.txt_field select:focus {
+transform: translateY(-2px);
+background: rgba(15, 23, 42, 1);
+border-color: #2dd4bf;
+color: #fff;
+box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+}
+
+.txt_field input {
+width: 100%;
+padding: 15px 20px;
+border: 1px solid #334155;
+border-radius: 12px;
+background: rgba(15, 23, 42, 1);
+font-size: 1rem;
+color: #fff;
+transition: all 0.3s ease;
+outline: none;
+}
+
+.txt_field input:focus {
+transform: translateY(-2px);
+background: rgba(15, 23, 42, 1);
+border-color: #2dd4bf;
+color: #fff;
+box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+}
+
+.txt_field input:valid {
+border-color: #2dd4bf;
+}
+
+.txt_field label {
+position: absolute;
+top: 0;
+left: 20px;
+transform: translateY(-50%);
+color: white;
+font-size: 0.85rem;
+pointer-events: none;
+padding: 0 8px;
+font-weight: 600;
+transition: all 0.3s ease;
+}
+
+.txt_field input:focus + label,
+.txt_field input:not(:placeholder-shown) + label {
+top: 0;
+color: #2dd4bf;
+font-weight: 700;
+}
+
+  body {
+        background-color: #0f172a; /* Deep Navy from your theme */
+        font-family: 'Inter', sans-serif;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .center {
+        background: rgba(30, 41, 59, 0.7); /* Translucent slate */
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(45, 212, 191, 0.2); /* Faint Teal border */
+        border-radius: 16px;
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo-text {
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: white;
+        align-items: center;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .btn-future {
+        background: linear-gradient(90deg, #2dd4bf 0%, #0d9488 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-future:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(90deg, #5eead4 0%, #14b8a6 100%);
+        color: white;
+    }
+
+    .login-link {
+        color: #2dd4bf;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+    .register-card {
+      
+        background: rgba(30, 41, 59, 0.7); /* Translucent slate */
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(45, 212, 191, 0.2); /* Faint Teal border */
+        border-radius: 16px;
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    .form-control {
+        background: rgb(254, 254, 255);
+        border: 1px solid #334155;
+        color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .form-control:focus {
+        background: rgba(15, 23, 42, 1);
+        border-color: #2dd4bf;
+        color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+    }
+    .btn-future {
+        background: linear-gradient(90deg, #2dd4bf 0%, #0d9488 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-future:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(90deg, #5eead4 0%, #14b8a6 100%);
+        color: white;
+    }
+
+    .login-link {
+        color: #2dd4bf;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+    .accent-link {
+        color: #2dd4bf;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+    /* Messages */
+.message-container {
+margin-bottom: 20px;
+}
+
+.message-container h4 {
+padding: 12px 20px;
+border-radius: 10px;
+font-size: 0.9rem;
+font-weight: 500;
+text-align: center;
+margin-bottom: 10px;
+border: 1px solid transparent;
+}
+
+.message-container h4[style*="color: firebrick"] {
+background-color: rgba(220, 53, 69, 0.1);
+border-color: rgba(220, 53, 69, 0.2);
+color: #dc3545 !important;
+}
+
+.message-container h4[style*="color: dodgerblue"] {
+background-color: rgba(255, 165, 0, 0.1);
+border-color: rgba(255, 165, 0, 0.3);
+color: #2691d9 !important;
+}
