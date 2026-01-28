@@ -1,0 +1,556 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Home Start -->
+ <style>
+ /* --- Pop-up Toast Styling --- */
+    #toast-container {
+        position: fixed;
+        top: 25px;
+        right: 25px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        pointer-events: none; /* Allows clicking through the container, but not the cards */
+    }
+
+    .toast-card {
+        pointer-events: auto;
+        min-width: 300px;
+        max-width: 400px;
+        background: rgba(11, 19, 43, 0.95); /* Dark Navy */
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: slideIn 0.5s ease forwards;
+    }
+
+    /* Success (Teal) */
+    .toast-success { border-left: 5px solid #00b4d8; }
+    .toast-success .toast-icon { color: #00b4d8; }
+
+    /* Error (Red) */
+    .toast-error { border-left: 5px solid #ff4d4d; }
+    .toast-error .toast-icon { color: #ff4d4d; }
+
+    .toast-icon { font-size: 1.2rem; margin-right: 15px; }
+    .toast-content { flex: 1; font-size: 0.9rem; font-weight: 500; }
+    
+    .toast-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.5;
+        margin-left: 10px;
+    }
+    .toast-close:hover { opacity: 1; }
+
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        to { transform: translateX(20px); opacity: 0; visibility: hidden; }
+    }
+    </style>
+
+<!--message-->
+{% if messages or form.errors %}
+<div id="toast-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="toast-card {% if message.tags == 'error' %}toast-error{% else %}toast-success{% endif %}">
+                <div class="toast-icon">
+                    {% if message.tags == 'error' %}<i class="fas fa-exclamation-circle"></i>{% else %}<i class="fas fa-check-circle"></i>{% endif %}
+                </div>
+                <div class="toast-content">{{ message }}</div>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+        {% for field in form %}{% for error in field.errors %}
+            <div class="toast-card toast-error">
+                <div class="toast-icon"><i class="fas fa-triangle-exclamation"></i></div>
+                <div class="toast-content"><strong>{{ field.label }}:</strong> {{ error }}</div>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            </div>
+        {% endfor %}{% endfor %}
+    {% endif %}
+</div>
+{% endif %}   
+<!--end message--> 
+
+<!-- Navbar & Carousel Start -->
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <a href="{% url 'home' %}" class="navbar-brand p-0 d-flex align-items-center">
+            <img src="{% static 'img/logo.png' %}" alt="FUTURE Logo" class="nav-logo me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                <a href="{% url 'service' %}" class="nav-item nav-link">Services</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'feature' %}" class="dropdown-item">Our features</a>
+                        <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                        <a href="{% url 'quote' %}" class="dropdown-item">Free Quote</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+            </div>
+            <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+            {% if user.is_authenticated %}
+                <div class="d-flex align-items-center ms-3">
+                    <span class="text-primary me-3">Hello, {{ user.first_name|default:user.username }}</span>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'dashboard' %}" class="btn btn-primary me-3">
+                            <i class="fa-solid fa-gauge-high me-1"></i> Dashboard
+                        </a>
+                    {% endif %}
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary ">Logout</button>
+                    </form>
+                </div>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn btn-primary py-2 px-4 ms-3">Connect with Us</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="w-100" src="{% static 'img/img-2.webp' %}" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 900px;">
+                        <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
+                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
+                        <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
+                        <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="{% static 'img/img-1.png' %}" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 900px;">
+                        <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
+                        <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
+                        <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
+                        <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- Navbar & Carousel End -->
+
+<!-- Facts start-->
+ <div class="container-fluid facts py-5 pt-lg-0">
+        <div class="container py-5 pt-lg-0">
+            <div class="row gx-0">
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="bg-primary shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
+                        <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
+                            <i class="fa fa-users text-primary"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="text-white mb-0">Happy Clients</h5>
+                            <h1 class="text-white mb-0" data-toggle="counter-up">128</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="bg-light shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
+                        <div class="bg-primary d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
+                            <i class="fa fa-check text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="text-primary mb-0">Projects Done</h5>
+                            <h1 class="mb-0" data-toggle="counter-up">128</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="bg-primary shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
+                        <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
+                            <i class="fa fa-award text-primary"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="text-white mb-0">Win Awards</h5>
+                            <h1 class="text-white mb-0" data-toggle="counter-up">10</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Facts Start -->
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="section-title position-relative pb-3 mb-5">
+                        <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
+                        <h1 class="mb-0">Architecting the Digital World with Innovation</h1>
+                    </div>
+                    <p class="mb-4">At <strong>FUTURE</strong>, we believe that software is the foundation of modern progress. Our journey began longtime ago with a simple mission: to bridge the gap between complex engineering challenges and elegant, scalable solutions. Today, we empower businesses globally by deploying cutting-edge AI, robust cloud infrastructures, and intuitive user experiences that stand the test of time.</p>
+                    <div class="row g-0 mb-3">
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Enterprise Scalability</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Elite Engineering Team</h5>
+                        </div>
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Agile Methodology</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Future-Proof Tech</h5>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
+                        <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                            <i class="fa fa-phone-alt text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="mb-2">Talk to our lead architect</h5>
+                            <h4 class="text-primary mb-0">+237 655-98-37-15/620-51-37-28</h4>
+                        </div>
+                    </div>
+                    <a href="quote.html" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">Request A Project Quote</a>
+                </div>
+                <div class="col-lg-5" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="{% static 'img/img-3.png' %}" style="object-fit: cover;" alt="FUTURE CEO leading the team">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Features Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
+                <h1 class="mb-0">Engineering Scalable Solutions to Power Your Growth</h1>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <div class="row g-5">
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fa fa-cubes text-white"></i>
+                            </div>
+                            <h4>Cutting-Edge Stack</h4>
+                            <p class="mb-0">We utilize modern frameworks and microservices to ensure your application remains fast, secure, and easily maintainable.</p>
+                        </div>
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fa fa-award text-white"></i>
+                            </div>
+                            <h4>Excellence in Code</h4>
+                            <p class="mb-0">Our clean-code philosophy reduces technical debt, ensuring your software is an asset, not a liability, for years to come.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s" src="{% static 'img/img-4.png' %}" style="object-fit: cover;" alt="Software Development Process">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row g-5">
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fa fa-users-cog text-white"></i>
+                            </div>
+                            <h4>Elite Tech Talent</h4>
+                            <p class="mb-0">Our engineers are industry veterans specialized in AI integration, Cloud computing, and DevOps automation.</p>
+                        </div>
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fa fa-phone-alt text-white"></i>
+                            </div>
+                            <h4>Dedicated Partnership</h4>
+                            <p class="mb-0">We don't just deliver a product; we provide 24/7 technical oversight and ongoing strategic consulting to help you scale.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Features Start -->
+
+
+    <!-- Service Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Our Services</h5>
+                <h1 class="mb-0">Elite Software Solutions Built for the Next Decade</h1>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                        <div class="service-icon">
+                            <i class="fa fa-shield-alt text-white"></i>
+                        </div>
+                        <h4 class="mb-3">Cyber Resilience</h4>
+                        <p class="m-0">Beyond basic security: we build zero-trust architectures and automated threat detection to protect your enterprise data.</p>
+                        <a class="btn btn-lg btn-primary rounded" href="service-detail.html">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                        <div class="service-icon">
+                            <i class="fa fa-chart-pie text-white"></i>
+                        </div>
+                        <h4 class="mb-3">AI & Data Science</h4>
+                        <p class="m-0">Transform raw data into predictive insights with custom LLMs, neural networks, and automated analytics pipelines.</p>
+                        <a class="btn btn-lg btn-primary rounded" href="service-detail.html">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                        <div class="service-icon">
+                            <i class="fa fa-code text-white"></i>
+                        </div>
+                        <h4 class="mb-3">Cloud Engineering</h4>
+                        <p class="m-0">Architecting scalable, cloud-native platforms using AWS, Azure, and Kubernetes for 99.99% uptime and global reach.</p>
+                        <a class="btn btn-lg btn-primary rounded" href="service-detail.html">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                        <div class="service-icon">
+                            <i class="fab fa-android text-white"></i>
+                        </div>
+                        <h4 class="mb-3">SaaS Development</h4>
+                        <p class="m-0">End-to-end product development, from MVP to enterprise-grade SaaS platforms with seamless multi-tenant architecture.</p>
+                        <a class="btn btn-lg btn-primary rounded" href="service-detail.html">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                        <div class="service-icon">
+                            <i class="fa fa-search text-white"></i>
+                        </div>
+                        <h4 class="mb-3">System Optimization</h4>
+                        <p class="m-0">We refactor legacy codebases, reducing technical debt and improving performance through rigorous auditing and DevOps.</p>
+                        <a class="btn btn-lg btn-primary rounded" href="service-detail.html">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                    <div class="position-relative bg-primary rounded h-100 d-flex flex-column align-items-center justify-content-center text-center p-5">
+                        <h3 class="text-white mb-3">Custom Project?</h3>
+                        <p class="text-white mb-3">If you have a unique engineering challenge, our senior architects are ready to design a custom roadmap for you.</p>
+                        <h4 class="text-white mb-0">+237 655-98-37-15</h4>
+                        <h4 class="text-white mb-0">+237 620-51-37-28</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+
+
+    <!-- Quote Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="section-title position-relative pb-3 mb-5">
+                        <h5 class="fw-bold text-primary text-uppercase">Request A Quote</h5>
+                        <h1 class="mb-0">Ready to Build the Future? Contact Our Architects Today</h1>
+                    </div>
+                    <div class="row gx-3">
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                            <h5 class="mb-4"><i class="fa fa-reply text-primary me-3"></i>Technical Feedback in 24h</h5>
+                        </div>
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                            <h5 class="mb-4"><i class="fa fa-phone-alt text-primary me-3"></i>Direct Line to Engineering</h5>
+                        </div>
+                    </div>
+                    <p class="mb-4">Every great product starts with a conversation. At <strong>FUTURE</strong>, we provide a comprehensive technical discovery phase for every inquiry. Whether you are looking to scale a legacy system, integrate advanced AI, or launch a new SaaS platform, our senior engineers are here to provide a detailed roadmap and transparent cost estimation tailored to your specific performance requirements.</p>
+                    <div class="d-flex align-items-center mt-2 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                            <a href="https://wa.me/237620513728" target="_blank">
+                                <i class="fab fa-whatsapp text-white fa-2x"></i>
+                            </a>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="mb-2">Contact us directly on WhatsApp</h5>
+                            <h4 class="text-primary mb-0">+237 620-51-37-28</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
+                        <form method="POST" action="{% url 'contact' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-xl-12">
+                                    <input type="text" name="full_name" class="form-control bg-light border-0" placeholder="Name" style="height: 55px;" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="email" name="email" class="form-control bg-light border-0" placeholder="Enter Your Email" style="height: 55px;" required>
+                                </div>
+                                <div class="col-12">
+                                    <select name="scope" class="form-select bg-light border-0" style="height: 55px;" required>
+                                        <option value="" selected disabled>Select Project Scope</option>
+                                        <option value="AI & Data Engineering">AI & Data Engineering</option>
+                                        <option value="Cloud Native Architecture">Cloud Native Architecture</option>
+                                        <option value="Full-Stack SaaS Development">Full-Stack SaaS Development</option>
+                                        <option value="Cyber Security Audit">Cyber Security Audit</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <textarea name="message_text" class="form-control bg-light border-0" rows="3" placeholder="Describe the service you'll like us to do for you" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-dark w-100 py-3" type="submit">Submit Request</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quote End -->
+
+    <!-- CEO section -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-5" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="{% static 'img/img-5.png' %}" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="section-title position-relative pb-3 mb-5">
+                        <h5 class="fw-bold text-primary text-uppercase">Meet the Visionary</h5>
+                        <h5 class="fw-bold text-primary text-uppercase">Mr. SONHOFO YEMMENE, CEO & Founder</h5>
+                        <h1 class="mb-0">Driving the Next Wave of Software Excellence</h1>
+                    </div>
+                    <p class="mb-4">As the founder of FUTURE, Mr. SONHOFO brings over many years of experience in disruptive technology and software architecture. Under their leadership, FUTURE has transformed from a bold concept into a leading-edge engineering hub dedicated to solving complex global challenges through code.</p>
+                    <p class="mb-4">"Our mission isn't just to build software; it's to architect the infrastructure of tomorrow. At FUTURE, we believe that every line of code is an opportunity to redefine what's possible."</p>
+                    <div class="section-title mb-3">
+                        <h2 class="mb-0">Connect with Our CEO</h2>
+                    </div>
+                    <p class="mb-4">Mr. SONHOFO is passionate about mentoring the next generation of developers and discussing the ethical implications of emerging tech.</p>
+                    
+                    
+                    <a href="{% url 'register' %}" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">Connect with Us</a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- CEO section End -->
+
+    <!-- Testimonial Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Testimonial</h5>
+                <h1 class="mb-0">Trust from the Leaders of the Tech Ecosystem</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s">
+                <div class="testimonial-item bg-light my-4">
+                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                        <img class="img-fluid rounded" src="{% static 'img/Testi-1.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                        <div class="ps-4">
+                            <h4 class="text-primary mb-1">Aurelie Ngo-Nlend</h4>
+                            <small class="text-uppercase">CTO, NexGen FinTech</small>
+                        </div>
+                    </div>
+                    <div class="pt-4 pb-5 px-5">
+                        "The team at FUTURE didn't just build our app; they re-architected our entire backend for 10x scale. Their engineering standards are the highest I've seen in the industry."
+                    </div>
+                </div>
+                <div class="testimonial-item bg-light my-4">
+                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                        <img class="img-fluid rounded" src="{% static 'img/Testi-2.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                        <div class="ps-4">
+                            <h4 class="text-primary mb-1">Francklin Kamga</h4>
+                            <small class="text-uppercase">Director of AI, Global Logistics</small>
+                        </div>
+                    </div>
+                    <div class="pt-4 pb-5 px-5">
+                        "Integrating AI into our legacy systems felt impossible until we partnered with FUTURE. They delivered a seamless, cloud-native solution that improved our efficiency by 40%."
+                    </div>
+                </div>
+                <div class="testimonial-item bg-light my-4">
+                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                        <img class="img-fluid rounded" src="{% static 'img/Testi-3.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                        <div class="ps-4">
+                            <h4 class="text-primary mb-1">Abdoulaye Bello</h4>
+                            <small class="text-uppercase">Founder, HealthStream SaaS</small>
+                        </div>
+                    </div>
+                    <div class="pt-4 pb-5 px-5">
+                        "Finding a partner that understands both business logic and deep-level coding is rare. FUTURE is a key strategic partner that treats our product like their own."
+                    </div>
+                </div>
+                <div class="testimonial-item bg-light my-4">
+                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                        <img class="img-fluid rounded" src="{% static 'img/Testi-4.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                        <div class="ps-4">
+                            <h4 class="text-primary mb-1">Christelle Bih</h4>
+                            <small class="text-uppercase">Operations Lead, SecureLink</small>
+                        </div>
+                    </div>
+                    <div class="pt-4 pb-5 px-5">
+                        "Their 'Cyber Resilience' audit saved us from a major vulnerability. The peace of mind that comes with their 24/7 technical oversight is absolutely invaluable."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+{% endblock %}     

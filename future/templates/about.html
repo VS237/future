@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us - FUTURE{% endblock %}
+
+{% block content %}
+
+<!-- Navbar Start -->
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <a href="{% url 'home' %}" class="navbar-brand p-0 d-flex align-items-center">
+            <img src="{% static 'img/logo.png' %}" alt="FUTURE Logo" class="nav-logo me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+                <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
+                <a href="{% url 'service' %}" class="nav-item nav-link">Services</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'feature' %}" class="dropdown-item">Our features</a>
+                        <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                        <a href="{% url 'quote' %}" class="dropdown-item">Free Quote</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">About Us</h1>
+                <a href="" class="h5 text-white">Home</a>
+                <i class="far fa-circle text-white px-2"></i>
+                <a href="" class="h5 text-white">About</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+<!-- About Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="section-title position-relative pb-3 mb-5">
+                    <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
+                    <h1 class="mb-0">Architecting the Digital World with Innovation</h1>
+                </div>
+                <p class="mb-4">At <strong>FUTURE</strong>, we believe that software is the foundation of modern progress. Our journey began longtime ago with a simple mission: to bridge the gap between complex engineering challenges and elegant, scalable solutions. Today, we empower businesses globally by deploying cutting-edge AI, robust cloud infrastructures, and intuitive user experiences that stand the test of time.</p>
+                <div class="row g-0 mb-3">
+                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Enterprise Scalability</h5>
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Elite Engineering Team</h5>
+                    </div>
+                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Agile Methodology</h5>
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Future-Proof Tech</h5>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                        <i class="fa fa-phone-alt text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Talk to our lead architect</h5>
+                        <h4 class="text-primary mb-0">+237 655-98-37-15/620-51-37-28</h4>
+                    </div>
+                </div>
+                <a href="{% static 'quote' %}" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">Request A Project Quote</a>
+            </div>
+            <div class="col-lg-5" style="min-height: 500px;">
+                <div class="position-relative h-100">
+                    <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="{% static 'img/img-3.png' %}" style="object-fit: cover;" alt="FUTURE CEO leading the team">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+
+<!-- CEO section -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-5" style="min-height: 500px;">
+                <div class="position-relative h-100">
+                    <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="{% static 'img/img-5.png' %}" style="object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="section-title position-relative pb-3 mb-5">
+                    <h5 class="fw-bold text-primary text-uppercase">Meet the Visionary</h5>
+                    <h5 class="fw-bold text-primary text-uppercase">Mr. SONHOFO YEMMENE, CEO & Founder</h5>
+                    <h1 class="mb-0">Driving the Next Wave of Software Excellence</h1>
+                </div>
+                <p class="mb-4">As the founder of FUTURE, Mr. SONHOFO brings over many years of experience in disruptive technology and software architecture. Under their leadership, FUTURE has transformed from a bold concept into a leading-edge engineering hub dedicated to solving complex global challenges through code.</p>
+                <p class="mb-4">"Our mission isn't just to build software; it's to architect the infrastructure of tomorrow. At FUTURE, we believe that every line of code is an opportunity to redefine what's possible."</p>
+                <div class="section-title mb-3">
+                    <h2 class="mb-0">Connect with Our CEO</h2>
+                </div>
+                <p class="mb-4">Mr. SONHOFO is passionate about mentoring the next generation of developers and discussing the ethical implications of emerging tech.</p>
+                
+                
+                <a href="quote.html" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">Connect with Us</a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- CEO section End -->
+{% endblock %}     

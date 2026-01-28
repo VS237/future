@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us - FUTURE{% endblock %}
+
+{% block content %}
+
+<!-- Navbar Start -->
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <a href="{% url 'home' %}" class="navbar-brand p-0 d-flex align-items-center">
+            <img src="{% static 'img/logo.png' %}" alt="FUTURE Logo" class="nav-logo me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+                <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
+                <a href="{% url 'service' %}" class="nav-item nav-link">Services</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'feature' %}" class="dropdown-item">Our features</a>
+                        <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                        <a href="{% url 'quote' %}" class="dropdown-item">Free Quote</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">About Us</h1>
+                <a href="" class="h5 text-white">Home</a>
+                <i class="far fa-circle text-white px-2"></i>
+                <a href="" class="h5 text-white">About</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+<!-- Testimonial Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Testimonial</h5>
+            <h1 class="mb-0">Trust from the Leaders of the Tech Ecosystem</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s">
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="{% static 'img/Testi-1.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Aurelie Ngo-Nlend</h4>
+                        <small class="text-uppercase">CTO, NexGen FinTech</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    "The team at FUTURE didn't just build our app; they re-architected our entire backend for 10x scale. Their engineering standards are the highest I've seen in the industry."
+                </div>
+            </div>
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="{% static 'img/Testi-2.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Francklin Kamga</h4>
+                        <small class="text-uppercase">Director of AI, Global Logistics</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    "Integrating AI into our legacy systems felt impossible until we partnered with FUTURE. They delivered a seamless, cloud-native solution that improved our efficiency by 40%."
+                </div>
+            </div>
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="{% static 'img/Testi-3.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Abdoulaye Bello</h4>
+                        <small class="text-uppercase">Founder, HealthStream SaaS</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    "Finding a partner that understands both business logic and deep-level coding is rare. FUTURE is a key strategic partner that treats our product like their own."
+                </div>
+            </div>
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="{% static 'img/Testi-4.png' %}" style="width: 60px; height: 60px;" alt="Client Profile">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Christelle Bih</h4>
+                        <small class="text-uppercase">Operations Lead, SecureLink</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    "Their 'Cyber Resilience' audit saved us from a major vulnerability. The peace of mind that comes with their 24/7 technical oversight is absolutely invaluable."
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us - FUTURE{% endblock %}
+
+{% block content %}
+
+<!-- Navbar Start -->
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <a href="{% url 'home' %}" class="navbar-brand p-0 d-flex align-items-center">
+            <img src="{% static 'img/logo.png' %}" alt="FUTURE Logo" class="nav-logo me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+                <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
+                <a href="{% url 'service' %}" class="nav-item nav-link">Services</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'feature' %}" class="dropdown-item">Our features</a>
+                        <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                        <a href="{% url 'quote' %}" class="dropdown-item">Free Quote</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">About Us</h1>
+                <a href="" class="h5 text-white">Home</a>
+                <i class="far fa-circle text-white px-2"></i>
+                <a href="" class="h5 text-white">About</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+<!-- Quote Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="section-title position-relative pb-3 mb-5">
+                        <h5 class="fw-bold text-primary text-uppercase">Request A Quote</h5>
+                        <h1 class="mb-0">Ready to Build the Future? Contact Our Architects Today</h1>
+                    </div>
+                    <div class="row gx-3">
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                            <h5 class="mb-4"><i class="fa fa-reply text-primary me-3"></i>Technical Feedback in 24h</h5>
+                        </div>
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                            <h5 class="mb-4"><i class="fa fa-phone-alt text-primary me-3"></i>Direct Line to Engineering</h5>
+                        </div>
+                    </div>
+                    <p class="mb-4">Every great product starts with a conversation. At <strong>FUTURE</strong>, we provide a comprehensive technical discovery phase for every inquiry. Whether you are looking to scale a legacy system, integrate advanced AI, or launch a new SaaS platform, our senior engineers are here to provide a detailed roadmap and transparent cost estimation tailored to your specific performance requirements.</p>
+                    <div class="d-flex align-items-center mt-2 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                            <a href="https://wa.me/237620513728" target="_blank">
+                                <i class="fab fa-whatsapp text-white fa-2x"></i>
+                            </a>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="mb-2">Contact us directly on WhatsApp</h5>
+                            <h4 class="text-primary mb-0">+237 620-51-37-28</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
+                        <form method="POST" action="{% url 'contact' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-xl-12">
+                                    <input type="text" name="full_name" class="form-control bg-light border-0" placeholder="Name" style="height: 55px;" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="email" name="email" class="form-control bg-light border-0" placeholder="Enter Your Email" style="height: 55px;" required>
+                                </div>
+                                <div class="col-12">
+                                    <select name="scope" class="form-select bg-light border-0" style="height: 55px;" required>
+                                        <option value="" selected disabled>Select Project Scope</option>
+                                        <option value="AI & Data Engineering">AI & Data Engineering</option>
+                                        <option value="Cloud Native Architecture">Cloud Native Architecture</option>
+                                        <option value="Full-Stack SaaS Development">Full-Stack SaaS Development</option>
+                                        <option value="Cyber Security Audit">Cyber Security Audit</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <textarea name="message_text" class="form-control bg-light border-0" rows="3" placeholder="Describe the service you'll like us to do for you" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-dark w-100 py-3" type="submit">Submit Request</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quote End -->
+{% endblock %}     

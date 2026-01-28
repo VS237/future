@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Favicon -->
+<link href="{% static 'img/logo.png' %}" rel="icon">
+
+<title>Register | FUTURE Engineering Group</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<style>
+ * {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-section {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.section-title {
+  font-size: 18px;
+  color: white;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.checkbox-group label {
+  margin: 0;
+  
+}
+.form-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background: white;
+}
+select:focus {
+  border-color: #2691d9;
+  outline: none;
+}
+
+/* Form Styles */
+form {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+/* Name Row Styles */
+.name-row {
+display: flex;
+gap: 15px;
+width: 100%;
+}
+
+.name-field {
+flex: 1;
+min-width: 0; /* Prevents flex items from overflowing */
+}
+
+/* Responsive adjustments for name row */
+@media (max-width: 768px) {
+.name-row {
+    gap: 12px;
+}
+}
+
+@media (max-width: 480px) {
+.name-row {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.name-field {
+    flex: none;
+}
+}
+
+/* Input Fields */
+.txt_field {
+position: relative;
+margin-bottom: 10px;
+}
+
+.txt_field textarea {
+width: 100%;
+padding: 15px 20px;
+border: 1px solid #334155;
+border-radius: 12px;
+background: rgba(15, 23, 42, 1);
+font-size: 1rem;
+color: #fff;
+transition: all 0.3s ease;
+outline: none;
+}
+
+.txt_field textarea:focus {
+transform: translateY(-2px);
+background: rgba(15, 23, 42, 1);
+border-color: #2dd4bf;
+color: #fff;
+box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+}
+
+.txt_field select {
+width: 100%;
+padding: 15px 20px;
+border: 1px solid #334155;
+border-radius: 12px;
+background: rgba(15, 23, 42, 1);
+font-size: 1rem;
+color: #fff;
+transition: all 0.3s ease;
+outline: none;
+}
+
+.txt_field select:focus {
+transform: translateY(-2px);
+background: rgba(15, 23, 42, 1);
+border-color: #2dd4bf;
+color: #fff;
+box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+}
+
+.txt_field input {
+width: 100%;
+padding: 15px 20px;
+border: 1px solid #334155;
+border-radius: 12px;
+background: rgba(15, 23, 42, 1);
+font-size: 1rem;
+color: #fff;
+transition: all 0.3s ease;
+outline: none;
+}
+
+.txt_field input:focus {
+transform: translateY(-2px);
+background: rgba(15, 23, 42, 1);
+border-color: #2dd4bf;
+color: #fff;
+box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+}
+
+.txt_field input:valid {
+border-color: #2dd4bf;
+}
+
+.txt_field label {
+position: absolute;
+top: 0;
+left: 20px;
+transform: translateY(-50%);
+color: white;
+font-size: 0.85rem;
+pointer-events: none;
+padding: 0 8px;
+font-weight: 600;
+transition: all 0.3s ease;
+}
+
+.txt_field input:focus + label,
+.txt_field input:not(:placeholder-shown) + label {
+top: 0;
+color: #2dd4bf;
+font-weight: 700;
+}
+
+  body {
+        background-color: #0f172a; /* Deep Navy from your theme */
+        font-family: 'Inter', sans-serif;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .center {
+        background: rgba(30, 41, 59, 0.7); /* Translucent slate */
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(45, 212, 191, 0.2); /* Faint Teal border */
+        border-radius: 16px;
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo-text {
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: white;
+        align-items: center;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .btn-future {
+        background: linear-gradient(90deg, #2dd4bf 0%, #0d9488 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-future:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(90deg, #5eead4 0%, #14b8a6 100%);
+        color: white;
+    }
+
+    .login-link {
+        color: #2dd4bf;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+    .register-card {
+      
+        background: rgba(30, 41, 59, 0.7); /* Translucent slate */
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(45, 212, 191, 0.2); /* Faint Teal border */
+        border-radius: 16px;
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    .form-control {
+        background: rgb(254, 254, 255);
+        border: 1px solid #334155;
+        color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .form-control:focus {
+        background: rgba(15, 23, 42, 1);
+        border-color: #2dd4bf;
+        color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(45, 212, 191, 0.1);
+    }
+    .btn-future {
+        background: linear-gradient(90deg, #2dd4bf 0%, #0d9488 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-future:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(90deg, #5eead4 0%, #14b8a6 100%);
+        color: white;
+    }
+
+    .login-link {
+        color: #2dd4bf;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+    .accent-link {
+        color: #2dd4bf;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+    /* Messages */
+.message-container {
+margin-bottom: 20px;
+}
+
+.message-container h4 {
+padding: 12px 20px;
+border-radius: 10px;
+font-size: 0.9rem;
+font-weight: 500;
+text-align: center;
+margin-bottom: 10px;
+border: 1px solid transparent;
+}
+
+.message-container h4[style*="color: firebrick"] {
+background-color: rgba(220, 53, 69, 0.1);
+border-color: rgba(220, 53, 69, 0.2);
+color: #dc3545 !important;
+}
+
+.message-container h4[style*="color: dodgerblue"] {
+background-color: rgba(255, 165, 0, 0.1);
+border-color: rgba(255, 165, 0, 0.3);
+color: #2691d9 !important;
+} 
+</style>
+  <body>
+    <!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+    
+    <div class="center">
+      <div class="text-center mb-4">
+          <img src="{% static 'img/logo.png' %}" alt="FUTURE Logo" class="nav-logo me-2" style="height: 75px;">
+          <p class="text-muted small">BUILD THE NEXT GENERATION</p>
+          <h3 class="mt-3 fw-bold">Create Your Account</h3>
+          <p class="text-secondary small">Join the future of innovation today.</p>
+      </div>
+
+      {% if messages %}
+      <div class="message-container">
+          {% for message in messages %}
+              {% if message.tags == 'error' %}
+                  <h4 style="color: firebrick;">{{message}}</h4>
+              {% else %}
+                  <h4 style="color: dodgerblue;">{{message}}</h4>
+              {% endif %}
+          {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="message-container">
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <h4 style="color: firebrick;">{{ error }}</h4>
+              {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+              <h4 style="color: firebrick;">{{ error }}</h4>
+          {% endfor %}
+      </div>
+      {% endif %}
+        
+      <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <!-- Account Information Section -->
+          <div class="form-section">
+            <div class="section-title">Account Information</div>
+            
+            <div class="name-row">
+              <div class="txt_field name-field">
+                <input type="text" required name="username" value="{{ form.username.value|default:'' }}" placeholder=" " class="form-control">
+                <span></span>
+                <label>Username</label>
+                {% if form.username.help_text %}
+                <div class="form-text">{{ form.username.help_text }}</div>
+                {% endif %}
+              </div>
+
+              <div class="txt_field name-field">
+                <input type="email" name="email" value="{{ form.email.value|default:'' }}" class="form-control" placeholder=" " required>
+                <span></span>
+                <label>Email</label>
+              </div>
+            </div>
+
+            <div class="name-row">
+              <div class="txt_field name-field">
+                <input type="password" required name="password" id="password" placeholder=" " class="form-control">
+                <span></span>
+                <label>Password</label>
+                {% if form.password.help_text %}
+                <div class="form-text">{{ form.password.help_text }}</div>
+                {% endif %}
+                <div class="password-strength">
+                  <div class="strength-bar" id="password-strength-bar"></div>
+                </div>
+              </div>
+
+              <div class="txt_field name-field">
+                <input type="password" required name="confirm_password" placeholder=" " class="form-control">
+                <span></span>
+                <label>Confirm Password</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Information Section -->
+          <div class="form-section">
+            <div class="section-title">Personal Information</div>
+            
+            <div class="name-row">
+              <div class="txt_field name-field">
+                <input type="text" required name="first_name" value="{{ form.first_name.value|default:'' }}" placeholder=" " class="form-control">
+                <span></span>
+                <label>First Name</label>
+              </div>
+
+              <div class="txt_field name-field">
+                <input type="text" required name="last_name" value="{{ form.last_name.value|default:'' }}" placeholder=" " class="form-control">
+                <span></span>
+                <label>Last Name</label>
+              </div>
+            </div>
+
+            <div class="txt_field">
+              <input type="tel" required name="phone" value="{{ form.phone.value|default:'' }}" placeholder=" " class="form-control">
+              <span></span>
+              <label>Phone Number</label>
+              {% if form.phone.help_text %}
+              <div class="form-text">{{ form.phone.help_text }}</div>
+              {% endif %}
+            </div>
+
+            <div class="txt_field">
+              <textarea name="address" rows="3" placeholder=" " style="resize: vertical; min-height: 60px;">{{ form.address.value|default:'' }}</textarea>
+              <span></span>
+              <label>Address</label>
+            </div>
+
+            <div class="name-row">
+              <div class="txt_field name-field">
+                <select name="city" required>
+                  <option value="">Select City</option>
+                  <option value="Douala" {% if form.city.value == 'Douala' %}selected{% endif %}>Douala</option>
+                  <option value="Yaoundé" {% if form.city.value == 'Yaoundé' %}selected{% endif %}>Yaoundé</option>
+                  <option value="Bamenda" {% if form.city.value == 'Bamenda' %}selected{% endif %}>Bamenda</option>
+                  <option value="Bafoussam" {% if form.city.value == 'Bafoussam' %}selected{% endif %}>Bafoussam</option>
+                  <option value="Garoua" {% if form.city.value == 'Garoua' %}selected{% endif %}>Garoua</option>
+                  <option value="Maroua" {% if form.city.value == 'Maroua' %}selected{% endif %}>Maroua</option>
+                  <option value="Ngaoundéré" {% if form.city.value == 'Ngaoundéré' %}selected{% endif %}>Ngaoundéré</option>
+                  <option value="Kumba" {% if form.city.value == 'Kumba' %}selected{% endif %}>Kumba</option>
+                  <option value="Limbe" {% if form.city.value == 'Limbe' %}selected{% endif %}>Limbe</option>
+                  <option value="Buea" {% if form.city.value == 'Buea' %}selected{% endif %}>Buea</option>
+                  <option value="Ebolowa" {% if form.city.value == 'Ebolowa' %}selected{% endif %}>Ebolowa</option>
+                  <option value="Bertoua" {% if form.city.value == 'Bertoua' %}selected{% endif %}>Bertoua</option>
+                </select>
+                <span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="terms">
+            <label class="form-check-label small text-secondary" for="terms">
+                I agree to the <a href="#" class="login-link">Terms & Conditions</a>
+            </label>
+          </div>
+          
+        </div>
+
+        <input type="submit" value="Create Account" class="btn btn-future w-100 mb-3">
+        <div class="text-center mt-2">
+          <span class="text-secondary small">Already have an account?</span>
+          <a href="{% url 'login' %}" class="accent-link ms-1">Sign In</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // Simple password strength indicator
+      document.getElementById('password').addEventListener('input', function(e) {
+        const password = e.target.value;
+        const strengthBar = document.getElementById('password-strength-bar');
+        let strength = 0;
+        
+        if (password.length >= 8) strength += 1;
+        if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 1;
+        if (password.match(/\d/)) strength += 1;
+        if (password.match(/[^a-zA-Z\d]/)) strength += 1;
+        
+        strengthBar.className = 'strength-bar';
+        if (password.length > 0) {
+          if (strength <= 1) strengthBar.classList.add('strength-weak');
+          else if (strength <= 2) strengthBar.classList.add('strength-medium');
+          else strengthBar.classList.add('strength-strong');
+        }
+      });
+
+      // Ensure labels stay up when input has content (for browser autofill)
+      document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('.txt_field input, .txt_field textarea, .txt_field select');
+        inputs.forEach(input => {
+          if (input.value || (input.tagName === 'SELECT' && input.selectedIndex > 0)) {
+            input.classList.add('has-value');
+          }
+          
+          input.addEventListener('input', function() {
+            if (this.value || (this.tagName === 'SELECT' && this.selectedIndex > 0)) {
+              this.classList.add('has-value');
+            } else {
+              this.classList.remove('has-value');
+            }
+          });
+
+          input.addEventListener('change', function() {
+            if (this.value || (this.tagName === 'SELECT' && this.selectedIndex > 0)) {
+              this.classList.add('has-value');
+            } else {
+              this.classList.remove('has-value');
+            }
+          });
+        });
+
+        // Phone number formatting for Cameroon numbers
+        const phoneInput = document.querySelector('input[name="phone"]');
+        phoneInput.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\D/g, '');
+          
+          if (value.startsWith('237')) {
+            value = value.substring(3);
+          }
+          
+          if (value.length > 0) {
+            if (value.length <= 2) {
+              e.target.value = '+237' + value;
+            } else if (value.length <= 5) {
+              e.target.value = '+237' + value.substring(0, 2) + value.substring(2);
+            } else if (value.length <= 8) {
+              e.target.value = '+237' + value.substring(0, 2) + value.substring(2, 5) + value.substring(5);
+            } else {
+              e.target.value = '+237' + value.substring(0, 2) + value.substring(2, 5) + value.substring(5, 8) + value.substring(8);
+            }
+          }
+        });
+      });
+
+      // Form validation before submission
+      document.querySelector('form').addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+        
+        if (password !== confirmPassword) {
+          e.preventDefault();
+          alert('Passwords do not match!');
+          return false;
+        }
+
+        const phone = document.querySelector('input[name="phone"]').value;
+        const phoneRegex = /^(\+237|237)?[6-9]\d{8}$/;
+        const cleanPhone = phone.replace(/\s/g, '');
+        
+        if (!phoneRegex.test(cleanPhone)) {
+          e.preventDefault();
+          alert('Please enter a valid Cameroonian phone number (e.g., +2376XX XXX XXX or 6XX XXX XXX)');
+          return false;
+        }
+      });
+    </script>
+  </body>
+</html>
